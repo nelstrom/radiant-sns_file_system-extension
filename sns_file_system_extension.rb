@@ -1,21 +1,18 @@
-# Uncomment this if you reference any of your controllers in activate
-# require_dependency 'application'
-
 class SnsFileSystemExtension < Radiant::Extension
-  version "1.0"
-  description "Describe your extension here"
-  url "http://yourwebsite.com/sns_file_system"
-  
-  # define_routes do |map|
-  #   map.connect 'admin/sns_file_system/:action', :controller => 'admin/sns_file_system'
-  # end
+  version "0.1"
+  description "Extend SnS with file_system functionality."
+  url "http://github.com/nelstrom/radiant-sns_file_system-extension/"
   
   def activate
-    # admin.tabs.add "Sns File System", "/admin/sns_file_system", :after => "Layouts", :visibility => [:all]
+    raise "The SnS_file_system extension requires the Styles 'n Scripts extension be available" unless defined?(SnsExtension)
+    raise "The SnS_file_system extension requires the Styles 'n Scripts extension be available" unless defined?(FileSystemExtension)
+    begin
+      FileSystem::MODELS << "TextAsset" << "Javascript" << "Stylesheet"
+    rescue NameError, LoadError
+    end
   end
   
   def deactivate
-    # admin.tabs.remove "Sns File System"
   end
   
 end
