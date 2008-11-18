@@ -1,16 +1,12 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe FileSystem::Model::TextAssetExtensions do
+describe TextAsset do
   
   it "should include FileSystem::Model module" do
-    [TextAsset, Stylesheet, Javascript].each do |model|
-      model.included_modules.should include(FileSystem::Model)
-    end
+    TextAsset.included_modules.should include(FileSystem::Model)
   end
   it "should include FileSystem::Model::TextAssetExtensions module" do
-    [TextAsset, Stylesheet, Javascript].each do |model|
-      model.included_modules.should include(FileSystem::Model::TextAssetExtensions)
-    end
+    TextAsset.included_modules.should include(FileSystem::Model::TextAssetExtensions)
   end
   
 end
