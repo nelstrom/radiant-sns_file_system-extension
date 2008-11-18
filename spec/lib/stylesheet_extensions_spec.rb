@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe FileSystem::Model::StylesheetExtensions do
+describe Stylesheet do
   
   it "should include FileSystem::Model module" do
     Stylesheet.included_modules.should include(FileSystem::Model)

@@ -1,6 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-
 describe Javascript do
   
   it "should include FileSystem::Model module" do
