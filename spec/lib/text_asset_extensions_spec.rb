@@ -41,7 +41,21 @@ describe TextAsset do
     @model.should respond_to(:filename)
   end
   
-  # ----------------
+  describe "extract_name" do
+    it "should get name from simple filename with default extension" do
+      MockModel.extract_name("text.html").should == "text"
+    end
+    it "should get name with extension from filename with default extension" do
+      MockModel.extract_name("text.css.html").should == "text.css"
+    end
+    it "should get name from filename with .min" do
+      MockModel.extract_name("text.min.html").should == "text"
+    end
+    it "should get name from filename with .min" do
+      MockModel.extract_name("text.js.min.html").should == "text.js"
+    end
+  end
+  
   describe "filename" do
     
     it "should use name with default extension" do
