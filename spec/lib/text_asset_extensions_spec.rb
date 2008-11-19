@@ -9,6 +9,10 @@ end
 class MockSubclass < MockModel
 end
 
+def mock_filepath
+  "#{RAILS_ROOT}/design/mock_models"
+end
+
 describe TextAsset do
   
   before :each do
@@ -95,9 +99,61 @@ describe TextAsset do
   end
   
   describe "load_file" do
-    it "should description" do
-      
+    before(:each) do
+      class << @model
+        attr_accessor :name, :content
+      end
+      @model.content = "Original content in the database"
+      @file_mock = mock("file_mock")
+      @file_mock.should_receive(:read).and_return("Content stored in a file")
     end
+    
+    it "should update content with file contents" do
+      @model.should_receive(:open).with("typography.min.html").and_return(@file_mock)
+      @model.load_file("typography.min.html")
+      @model.content.should == "Content stored in a file"
+    end
+    
+    it "should set minify to true when filename contains .min" do
+      class << @model
+        attr_accessor :minify
+      end
+      @model.minify = false
+      @model.should_receive(:open).with("typography.min.html").and_return(@file_mock)
+      @model.load_file("typography.min.html")
+      @model.minify.should be_true
+    end
+    
+    it "should set minify to false when filename doesn't contains .min" do
+      class << @model
+        attr_accessor :minify
+      end
+      @model.minify = true
+      @model.should_receive(:open).with("typography.html").and_return(@file_mock)
+      @model.load_file("typography.html")
+      @model.minify.should be_false
+    end
+    
+    it "should set filter_id to nil when filename uses default extension" do
+      class << @model
+        attr_accessor :filter_id
+      end
+      @model.filter_id = "Blah"
+      @model.should_receive(:open).with("typography.min.html").and_return(@file_mock)
+      @model.load_file("typography.min.html")
+      @model.filter_id.should be_nil
+    end
+    
+    it "should set filter_id to the file extension, when not using default" do
+      class << @model
+        attr_accessor :filter_id
+      end
+      @model.filter_id = nil
+      @model.should_receive(:open).with("typography.min.textile").and_return(@file_mock)
+      @model.load_file("typography.min.textile")
+      @model.filter_id.should == "Textile"
+    end
+    
   end
   
 end
