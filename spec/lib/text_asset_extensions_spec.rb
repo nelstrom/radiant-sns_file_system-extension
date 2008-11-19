@@ -138,7 +138,7 @@ describe TextAsset do
       class << @model
         attr_accessor :filter_id
       end
-      @model.filter_id = "Blah"
+      @model.filter_id = "Textile"
       @model.should_receive(:open).with("typography.min.html").and_return(@file_mock)
       @model.load_file("typography.min.html")
       @model.filter_id.should be_nil
