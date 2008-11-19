@@ -1,18 +1,18 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-class MockModel
+class MockStyles
   def self.class_of_active_record_descendant(klass)
-    MockModel
+    MockStyles
   end
 end
 
 describe Stylesheet do
   
   before :each do
-    MockModel.send :include, FileSystem::Model
-    MockModel.send :include, FileSystem::Model::TextAssetExtensions
-    MockModel.send :include, FileSystem::Model::StylesheetExtensions
-    @model = MockModel.new
+    MockStyles.send :include, FileSystem::Model
+    MockStyles.send :include, FileSystem::Model::TextAssetExtensions
+    MockStyles.send :include, FileSystem::Model::StylesheetExtensions
+    @model = MockStyles.new
   end
   
   it "should include FileSystem::Model module" do
@@ -27,7 +27,7 @@ describe Stylesheet do
   
   it "should have class methods" do
     [:path, :load_files, :save_files].each do |m|
-      MockModel.should respond_to(m)
+      MockStyles.should respond_to(m)
     end
   end
   
@@ -38,7 +38,7 @@ describe Stylesheet do
   end
   
   it "should use 'Stylesheet' as klass_name" do
-    MockModel.klass_name.should == "Stylesheet"
+    MockStyles.klass_name.should == "Stylesheet"
   end
   
   describe "filename" do

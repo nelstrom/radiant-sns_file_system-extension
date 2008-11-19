@@ -1,18 +1,18 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-class MockModel
+class MockJS
   def self.class_of_active_record_descendant(klass)
-    MockModel
+    MockJS
   end
 end
 
 describe Javascript do
   
   before :each do
-    MockModel.send :include, FileSystem::Model
-    MockModel.send :include, FileSystem::Model::TextAssetExtensions
-    MockModel.send :include, FileSystem::Model::JavascriptExtensions
-    @model = MockModel.new
+    MockJS.send :include, FileSystem::Model
+    MockJS.send :include, FileSystem::Model::TextAssetExtensions
+    MockJS.send :include, FileSystem::Model::JavascriptExtensions
+    @model = MockJS.new
   end
   
   it "should include FileSystem::Model module" do
@@ -27,7 +27,7 @@ describe Javascript do
   
   it "should have class methods" do
     [:path, :load_files, :save_files].each do |m|
-      MockModel.should respond_to(m)
+      MockJS.should respond_to(m)
     end
   end
   
@@ -38,7 +38,7 @@ describe Javascript do
   end
   
   it "should use 'Javascript' as klass_name" do
-    MockModel.klass_name.should == "Javascript"
+    MockJS.klass_name.should == "Javascript"
   end
   
   describe "filename" do
